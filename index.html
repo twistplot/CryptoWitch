@@ -353,9 +353,37 @@
       position: absolute;
       left: 0;
     }
+    
+    /* Music controls */
+    .music-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(10, 10, 20, 0.7);
+      border: 1px solid var(--neon-teal);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--neon-teal);
+      transition: all 0.3s ease;
+    }
+    
+    .music-controls:hover {
+      background: var(--neon-teal);
+      color: #000;
+      transform: scale(1.1);
+    }
   </style>
 </head>
 <body>
+  <!-- Music Controls -->
+  <div class="music-controls" id="musicToggle" title="Toggle Music">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--neon-teal)" id="musicIcon">
+      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+    </svg>
+  </div>
+
   <div class="scanline"></div>
 
   <!-- Spell Animation Container -->
@@ -550,33 +578,52 @@
     </div>
   </footer>
   
-  <!-- Audio Element -->
-  <audio id="witchAudio" loop>
-    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
-  </audio>
-  
   <script>
-    // Spell casting functions
+    // Audio elements
+    const bgMusic = new Audio('https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.3;
+    
+    const spellSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-magical-wooden-fairy-harp-283.mp3');
+    spellSound.volume = 0.7;
+    
+    const clickSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3');
+    clickSound.volume = 0.5;
+
+    // Music toggle
+    const musicToggle = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    let musicPlaying = false;
+    
+    musicToggle.addEventListener('click', () => {
+      if(musicPlaying) {
+        bgMusic.pause();
+        musicIcon.style.fill = 'var(--neon-teal)';
+      } else {
+        bgMusic.play();
+        musicIcon.style.fill = '#000';
+      }
+      musicPlaying = !musicPlaying;
+      clickSound.play();
+    });
+
+    // Spell particle creation
     function createParticle(x, y) {
       const particle = document.createElement('div');
       particle.className = 'spell-particle';
       
-      // Random neon color
       const colors = ['#bc13fe', '#0ff0fc', '#ff2ced', '#00ff41'];
       const color = colors[Math.floor(Math.random() * colors.length)];
       particle.style.backgroundColor = color;
       particle.style.boxShadow = `0 0 10px ${color}`;
       
-      // Random size
       const size = Math.random() * 10 + 5;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       
-      // Position
       particle.style.left = `${x}px`;
       particle.style.top = `${y}px`;
       
-      // Animation
       const animation = particle.animate([
         { transform: 'translate(0, 0) scale(1)', opacity: 1 },
         { transform: `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px) scale(0)`, opacity: 0 }
@@ -586,15 +633,17 @@
       });
       
       animation.onfinish = () => particle.remove();
-      
       document.getElementById('spellAnimation').appendChild(particle);
     }
     
+    // Spell casting with sound
     function castSpell() {
+      spellSound.currentTime = 0;
+      spellSound.play();
+      
       const animation = document.getElementById('spellAnimation');
       animation.style.display = 'block';
       
-      // Create particles
       for (let i = 0; i < 50; i++) {
         setTimeout(() => {
           const x = Math.random() * window.innerWidth;
@@ -603,7 +652,6 @@
         }, i * 20);
       }
       
-      // Show spell modal after animation
       setTimeout(() => {
         animation.style.display = 'none';
         document.getElementById('spellModal').style.display = 'block';
@@ -614,11 +662,10 @@
       document.getElementById('spellModal').style.display = 'none';
     }
     
-    // Play audio on interaction
-    document.addEventListener('click', function() {
-      const audio = document.getElementById('witchAudio');
-      audio.volume = 0.3;
-      audio.play().catch(e => console.log('Audio play failed:', e));
+    // Play audio on first interaction
+    document.addEventListener('click', function firstInteraction() {
+      bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
+      document.removeEventListener('click', firstInteraction);
     });
     
     // Glitch effect on random elements
