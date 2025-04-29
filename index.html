@@ -598,63 +598,80 @@
     </div>
   </footer>
   
-  <script>
-    // Audio elements
-    const bgMusic = new Audio('https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3');
+  <!-- Your entire HTML and CSS remains EXACTLY the same until the script section -->
+  
+<script>
+    // ===================== UPDATED AUDIO SECTION =====================
+    // Self-hosted audio (upload witches-cauldron-153084.mp3 to GitHub root)
+    const bgMusic = new Audio('witches-cauldron-153084.mp3');
     bgMusic.loop = true;
     bgMusic.volume = 0.3;
     
-    const spellSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-magical-wooden-fairy-harp-283.mp3');
+    // Spell sound (fallback to Mixkit if needed)
+    const spellSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-magical-fairy-spell-869.mp3');
     spellSound.volume = 0.7;
     
-    const clickSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3');
+    // Click sound (fallback to Mixkit if needed)
+    const clickSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3');
     clickSound.volume = 0.5;
 
-    // Music toggle
-    const musicToggle = document.getElementById('musicToggle');
-    const musicIcon = document.getElementById('musicIcon');
+    // Music toggle state
     let musicPlaying = false;
-    
+    let audioEnabled = false;
+
     // Enable audio after first user interaction
     function enableAudio() {
-        document.body.removeEventListener('click', enableAudio);
-        document.body.removeEventListener('keydown', enableAudio);
+        if (audioEnabled) return;
+        audioEnabled = true;
         
-        // Try to play music (will work now that user has interacted)
-        bgMusic.play().then(() => {
-            musicPlaying = true;
-            musicIcon.style.fill = '#000';
-            document.getElementById('audioWarning').style.display = 'none';
-        }).catch(e => {
-            console.log("Audio playback error:", e);
-            // Show visual indicator that audio is blocked
-            musicIcon.style.fill = 'var(--neon-pink)';
-            document.getElementById('audioWarning').style.display = 'block';
-        });
-    }
-    
-    // Set up initial event listeners for audio enablement
-    document.body.addEventListener('click', enableAudio);
-    document.body.addEventListener('keydown', enableAudio);
-    
-    musicToggle.addEventListener('click', () => {
-        clickSound.play();
-        if(musicPlaying) {
-            bgMusic.pause();
-            musicIcon.style.fill = 'var(--neon-teal)';
-        } else {
+        // iOS workaround: play a silent audio first
+        const silentAudio = new Audio();
+        silentAudio.src = 'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ...';
+        silentAudio.play().then(() => {
+            silentAudio.remove();
+            // Now play the real audio
             bgMusic.play().then(() => {
-                musicIcon.style.fill = '#000';
+                musicPlaying = true;
+                document.getElementById('musicIcon').style.fill = '#000';
                 document.getElementById('audioWarning').style.display = 'none';
-            }).catch(e => {
-                console.log("Audio playback error:", e);
-                musicIcon.style.fill = 'var(--neon-pink)';
-                document.getElementById('audioWarning').style.display = 'block';
-            });
+            }).catch(e => showAudioError());
+        }).catch(e => showAudioError());
+    }
+
+    function showAudioError() {
+        console.log("Audio blocked - needs user interaction");
+        document.getElementById('musicIcon').style.fill = 'var(--neon-pink)';
+        document.getElementById('audioWarning').style.display = 'block';
+    }
+
+    // Set up initial event listeners
+    ['click', 'touchstart', 'keydown'].forEach(event => {
+        document.body.addEventListener(event, enableAudio, { once: true });
+    });
+
+    // Music toggle control
+    document.getElementById('musicToggle').addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Play click sound if possible
+        clickSound.play().catch(e => console.log("Click sound blocked:", e));
+        
+        if (musicPlaying) {
+            bgMusic.pause();
+            document.getElementById('musicIcon').style.fill = 'var(--neon-teal)';
+        } else {
+            bgMusic.play()
+                .then(() => {
+                    document.getElementById('musicIcon').style.fill = '#000';
+                    document.getElementById('audioWarning').style.display = 'none';
+                })
+                .catch(e => showAudioError());
         }
         musicPlaying = !musicPlaying;
     });
 
+    // ===================== REST OF YOUR EXISTING SCRIPT =====================
+    // (Keep all your existing functions below exactly as they are)
     // Spell particle creation
     function createParticle(x, y) {
       const particle = document.createElement('div');
@@ -726,6 +743,4 @@
         document.getElementById('audioWarning').style.display = 'block';
       }
     }, 3000);
-  </script>
-</body>
-</html>
+</script>
