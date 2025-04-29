@@ -374,9 +374,29 @@
       color: #000;
       transform: scale(1.1);
     }
+    
+    /* Audio warning */
+    #audioWarning {
+      display: none;
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: var(--neon-pink);
+      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1001;
+      font-family: 'Orbitron';
+      box-shadow: 0 0 15px var(--neon-pink);
+    }
   </style>
 </head>
 <body>
+  <!-- Audio Warning -->
+  <div id="audioWarning">
+    🔊 Audio blocked - click anywhere to enable sounds
+  </div>
+
   <!-- Music Controls -->
   <div class="music-controls" id="musicToggle" title="Toggle Music">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--neon-teal)" id="musicIcon">
@@ -595,16 +615,44 @@
     const musicIcon = document.getElementById('musicIcon');
     let musicPlaying = false;
     
+    // Enable audio after first user interaction
+    function enableAudio() {
+        document.body.removeEventListener('click', enableAudio);
+        document.body.removeEventListener('keydown', enableAudio);
+        
+        // Try to play music (will work now that user has interacted)
+        bgMusic.play().then(() => {
+            musicPlaying = true;
+            musicIcon.style.fill = '#000';
+            document.getElementById('audioWarning').style.display = 'none';
+        }).catch(e => {
+            console.log("Audio playback error:", e);
+            // Show visual indicator that audio is blocked
+            musicIcon.style.fill = 'var(--neon-pink)';
+            document.getElementById('audioWarning').style.display = 'block';
+        });
+    }
+    
+    // Set up initial event listeners for audio enablement
+    document.body.addEventListener('click', enableAudio);
+    document.body.addEventListener('keydown', enableAudio);
+    
     musicToggle.addEventListener('click', () => {
-      if(musicPlaying) {
-        bgMusic.pause();
-        musicIcon.style.fill = 'var(--neon-teal)';
-      } else {
-        bgMusic.play();
-        musicIcon.style.fill = '#000';
-      }
-      musicPlaying = !musicPlaying;
-      clickSound.play();
+        clickSound.play();
+        if(musicPlaying) {
+            bgMusic.pause();
+            musicIcon.style.fill = 'var(--neon-teal)';
+        } else {
+            bgMusic.play().then(() => {
+                musicIcon.style.fill = '#000';
+                document.getElementById('audioWarning').style.display = 'none';
+            }).catch(e => {
+                console.log("Audio playback error:", e);
+                musicIcon.style.fill = 'var(--neon-pink)';
+                document.getElementById('audioWarning').style.display = 'block';
+            });
+        }
+        musicPlaying = !musicPlaying;
     });
 
     // Spell particle creation
@@ -639,7 +687,7 @@
     // Spell casting with sound
     function castSpell() {
       spellSound.currentTime = 0;
-      spellSound.play();
+      spellSound.play().catch(e => console.log("Spell sound blocked:", e));
       
       const animation = document.getElementById('spellAnimation');
       animation.style.display = 'block';
@@ -662,12 +710,6 @@
       document.getElementById('spellModal').style.display = 'none';
     }
     
-    // Play audio on first interaction
-    document.addEventListener('click', function firstInteraction() {
-      bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
-      document.removeEventListener('click', firstInteraction);
-    });
-    
     // Glitch effect on random elements
     setInterval(() => {
       const elements = document.querySelectorAll('.glitch, .terminal, .cyber-button');
@@ -677,6 +719,13 @@
         randomElement.classList.remove('glitch-active');
       }, 300);
     }, 5000);
+
+    // Show audio warning if still not enabled after 3 seconds
+    setTimeout(() => {
+      if (!musicPlaying) {
+        document.getElementById('audioWarning').style.display = 'block';
+      }
+    }, 3000);
   </script>
 </body>
 </html>
