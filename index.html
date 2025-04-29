@@ -2,93 +2,352 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Crypto Witch</title>
+  <title>CRYPTO WITCH | Cybernetic Memecoin Sorcery</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Oxanium:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    :root {
+      --neon-purple: #bc13fe;
+      --neon-teal: #0ff0fc;
+      --neon-pink: #ff2ced;
+      --matrix-green: #00ff41;
+    }
+    
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
-      color: #00ffcc;
+      font-family: 'Oxanium', sans-serif;
+      background-color: #0a0a0a;
+      color: white;
       overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(15, 240, 252, 0.1) 0%, transparent 20%),
+        linear-gradient(to bottom, rgba(10, 10, 10, 1), rgba(5, 5, 15, 1));
     }
 
-    .glow-text {
-      text-shadow: 0 0 8px #00ffe7, 0 0 16px #00ffe7, 0 0 32px #00ffe7;
+    h1, h2, h3, h4 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
     }
 
-    .neon-button {
+    .cyber-text {
+      text-shadow: 0 0 5px var(--neon-teal), 
+                   0 0 10px var(--neon-teal),
+                   0 0 20px var(--neon-purple);
+      letter-spacing: 2px;
+    }
+
+    .cyber-button {
       background: transparent;
-      border: 2px solid #00ffcc;
+      border: 2px solid var(--neon-teal);
       padding: 12px 30px;
       font-size: 18px;
-      color: #00ffcc;
+      color: var(--neon-teal);
       text-transform: uppercase;
-      transition: 0.3s ease;
-      box-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px var(--neon-teal), 
+                  inset 0 0 10px var(--neon-teal);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Orbitron', sans-serif;
     }
 
-    .neon-button:hover {
-      background-color: #00ffe7;
-      color: black;
-      box-shadow: 0 0 20px #00ffe7, 0 0 40px #00ffe7;
+    .cyber-button:hover {
+      background-color: var(--neon-teal);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-teal), 
+                  0 0 40px var(--neon-purple);
+      text-shadow: 0 0 5px rgba(0,0,0,0.5);
     }
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
+    .cyber-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(15, 240, 252, 0.4), transparent);
+      transition: 0.5s;
+    }
+
+    .cyber-button:hover:before {
+      left: 100%;
+    }
+
+    .cyber-card {
+      background: rgba(10, 10, 20, 0.7);
+      border: 1px solid var(--neon-purple);
+      border-radius: 0;
+      padding: 30px;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px var(--neon-purple),
+                  inset 0 0 10px var(--neon-purple);
+      position: relative;
+      clip-path: polygon(
+        0 0, 
+        100% 0, 
+        100% calc(100% - 15px), 
+        calc(100% - 15px) 100%, 
+        0 100%
+      );
+    }
+
+    .cyber-card:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 15px;
+      height: 15px;
+      background: var(--neon-teal);
+      box-shadow: 0 0 5px var(--neon-teal),
+                  0 0 10px var(--neon-teal);
+    }
+
+    .matrix-text {
+      color: var(--matrix-green);
+      font-family: monospace;
+      text-shadow: 0 0 5px var(--matrix-green);
+    }
+
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 240, 252, 0) 0%,
+        rgba(15, 240, 252, 0.03) 50%,
+        rgba(15, 240, 252, 0) 100%
+      );
+      background-size: 100% 8px;
+      pointer-events: none;
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+
+    .pulse {
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    .terminal {
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--matrix-green);
+      font-family: monospace;
       padding: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+      position: relative;
+    }
+
+    .terminal:before {
+      content: '> ';
+      color: var(--matrix-green);
+    }
+
+    .glitch {
+      position: relative;
+    }
+
+    .glitch:before, .glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch:before {
+      color: var(--neon-pink);
+      animation: glitch-effect 3s infinite;
+    }
+
+    .glitch:after {
+      color: var(--neon-teal);
+      animation: glitch-effect 2s infinite reverse;
+    }
+
+    @keyframes glitch-effect {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(-3px, -3px); }
+      60% { transform: translate(3px, 3px); }
+      80% { transform: translate(3px, -3px); }
+      100% { transform: translate(0); }
+    }
+
+    .holographic {
+      background: linear-gradient(45deg, 
+        var(--neon-purple) 0%, 
+        var(--neon-teal) 50%, 
+        var(--neon-pink) 100%);
+      background-size: 200% 200%;
+      animation: holographic 4s ease infinite;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    @keyframes holographic {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
+  <div class="scanline"></div>
 
-  <!-- Hero Section -->
-  <section class="min-h-screen flex flex-col items-center justify-center text-center p-6" style="background-image: url('https://imgur.com/a/u11kviu'); background-size: cover; background-position: center;">
-    <h1 class="text-5xl md:text-7xl font-bold glow-text mb-4">CRYPTO WITCH</h1>
-    <p class="text-xl md:text-2xl text-teal-200 mb-6">Casting stealth spells on Pump.fun</p>
-    <button class="neon-button" onclick="alert('Entering the Witchverse!')">Enter the Witchverse</button>
-  </section>
-
-  <!-- Tokenomics -->
-  <section class="p-10 flex flex-col items-center">
-    <div class="glass-card max-w-xl text-center">
-      <h2 class="text-3xl mb-4 glow-text">📜 Tokenomics</h2>
-      <p>Fixed Supply: <strong>1,000,000,000</strong></p>
-      <p>Tax: <strong>0%</strong></p>
-      <p>Launch: <strong>Stealth drop on pump.fun</strong></p>
+  <!-- Cybernetic Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative overflow-hidden">
+    <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('https://i.imgur.com/Jp6QSYn.png'); background-size: cover; background-position: center; filter: grayscale(100%) contrast(150%);"></div>
+    
+    <div class="relative z-10">
+      <div class="glitch mb-6" data-text="CRYPTO WITCH">
+        <h1 class="text-6xl md:text-8xl font-bold cyber-text">CRYPTO WITCH</h1>
+      </div>
+      
+      <p class="text-2xl md:text-3xl mb-8 matrix-text pulse">>_ CYBERNETIC MEMECOIN SORCERY</p>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <button class="cyber-button" onclick="alert('INITIATING WITCH PROTOCOL...')">ENTER THE WITCHVERSE</button>
+        <button class="cyber-button" style="border-color: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);" onclick="alert('CONNECTING TO PUMP.FUN...')">BUY $WITCH</button>
+      </div>
     </div>
   </section>
 
-  <!-- Spellbook -->
-  <section class="p-10 flex flex-col items-center">
-    <div class="glass-card max-w-xl text-center">
-      <h2 class="text-3xl mb-4 glow-text">🧪 The Spellbook</h2>
-      <ul>
-        <li>PotionOfPump()</li>
-        <li>HexOfHODL()</li>
-        <li>Witch's Curse()</li>
-        <li>SummonWitchers()</li>
-      </ul>
+  <!-- Tokenomics Terminal -->
+  <section class="py-20 px-6 flex flex-col items-center">
+    <div class="cyber-card max-w-2xl w-full">
+      <h2 class="text-4xl mb-6 cyber-text flex items-center">
+        <span class="holographic">📜</span> 
+        <span class="ml-3">TOKENOMICS TERMINAL</span>
+      </h2>
+      
+      <div class="terminal mb-4">
+        <span class="matrix-text">>_ TOTAL_SUPPLY = 1,000,000,000 $WITCH</span>
+      </div>
+      
+      <div class="terminal mb-4">
+        <span class="matrix-text">>_ TAX = 0% (PURE_DEFI_SPELL)</span>
+      </div>
+      
+      <div class="terminal">
+        <span class="matrix-text">>_ LAUNCH_PROTOCOL = STEALTH_DROP.PUMP.FUN</span>
+      </div>
     </div>
   </section>
 
-  <!-- Roadmap -->
-  <section class="p-10 flex flex-col items-center">
-    <div class="glass-card max-w-xl text-center">
-      <h2 class="text-3xl mb-4 glow-text">🔮 The Witch Map</h2>
-      <ul>
-        <li>Phase 1: Gather the Coven</li>
-        <li>Phase 2: Cast the First Spell</li>
-        <li>Phase 3: Witchverse Expansion</li>
-        <li>Phase 4: Launch Coven Wars</li>
-      </ul>
+  <!-- Digital Spellbook -->
+  <section class="py-20 px-6 flex flex-col items-center">
+    <div class="cyber-card max-w-2xl w-full">
+      <h2 class="text-4xl mb-6 cyber-text flex items-center">
+        <span class="holographic">🧪</span> 
+        <span class="ml-3">DIGITAL SPELLBOOK v2.0</span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="terminal">
+          <span class="matrix-text">>_ PotionOfPump.exe</span>
+          <p class="text-gray-400 mt-2">Maximize token pump potential</p>
+        </div>
+        
+        <div class="terminal">
+          <span class="matrix-text">>_ HexOfHODL.bat</span>
+          <p class="text-gray-400 mt-2">Lock in diamond hands</p>
+        </div>
+        
+        <div class="terminal">
+          <span class="matrix-text">>_ WitchesCurse.dll</span>
+          <p class="text-gray-400 mt-2">Anti-whale protection</p>
+        </div>
+        
+        <div class="terminal">
+          <span class="matrix-text">>_ SummonWitchers.apk</span>
+          <p class="text-gray-400 mt-2">Community growth spell</p>
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- Cyber Roadmap -->
+  <section class="py-20 px-6 flex flex-col items-center">
+    <div class="cyber-card max-w-2xl w-full">
+      <h2 class="text-4xl mb-6 cyber-text flex items-center">
+        <span class="holographic">🔮</span> 
+        <span class="ml-3">CYBER ROADMAP</span>
+      </h2>
+      
+      <div class="space-y-6">
+        <div class="flex items-start">
+          <div class="bg-black border-2 border-purple-500 text-purple-400 px-3 py-1 mr-4 font-mono">PHASE_01</div>
+          <div>
+            <h3 class="text-xl text-purple-300 mb-1">GATHER_THE_COVEN</h3>
+            <p class="text-gray-400">Initial stealth launch and community formation</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="bg-black border-2 border-teal-500 text-teal-400 px-3 py-1 mr-4 font-mono">PHASE_02</div>
+          <div>
+            <h3 class="text-xl text-teal-300 mb-1">CAST_THE_FIRST_SPELL</h3>
+            <p class="text-gray-400">First major marketing push and exchange listings</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="bg-black border-2 border-pink-500 text-pink-400 px-3 py-1 mr-4 font-mono">PHASE_03</div>
+          <div>
+            <h3 class="text-xl text-pink-300 mb-1">WITCHVERSE_EXPANSION</h3>
+            <p class="text-gray-400">NFT collection and metaverse integration</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start">
+          <div class="bg-black border-2 border-green-500 text-green-400 px-3 py-1 mr-4 font-mono">PHASE_04</div>
+          <div>
+            <h3 class="text-xl text-green-300 mb-1">COVEN_WARS.GAME</h3>
+            <p class="text-gray-400">Play-to-earn battle game launch</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cyber Footer -->
+  <footer class="py-10 px-6 border-t border-gray-800 text-center">
+    <div class="max-w-4xl mx-auto">
+      <p class="matrix-text mb-4">>_ JOIN_THE_COVEN:</p>
+      
+      <div class="flex justify-center space-x-6 mb-8">
+        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+          <span class="text-xl">TELEGRAM</span>
+        </a>
+        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+          <span class="text-xl">TWITTER</span>
+        </a>
+        <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors">
+          <span class="text-xl">DISCORD</span>
+        </a>
+      </div>
+      
+      <p class="text-gray-600 text-sm">
+        $WITCH IS A MEMECOIN. NOT FINANCIAL ADVICE. THE COVEN DOES NOT GUARANTEE RETURNS.
+        <br>
+        ALL SPELLS CAST AT YOUR OWN RISK.
+      </p>
+    </div>
+  </footer>
 </body>
 </html>
