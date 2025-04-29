@@ -589,186 +589,143 @@
   
   <script>
     // ===================== AUDIO SYSTEM =====================
-    const bgMusic = new Audio('witches-cauldron-153084.mp3');
-    bgMusic.loop = true;
-    bgMusic.volume = 0.3;
+   const bgMusic = new Audio('witches-cauldron-153084.mp3');
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
+
+// ===================== SPELL SYSTEM =====================
+const spellBook = [
+    {
+        name: "Potion of Pump",
+        effect: "Increases token value by 13.37%",
+        color: "#ff2ced",
+        sound: "https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3" // Working magic spell sound
+    },
+    {
+        name: "Hex of HODL", 
+        effect: "Locks weak hands into diamond status",
+        color: "#0ff0fc",
+        sound: "https://assets.mixkit.co/active_storage/sfx/2593/2593-preview.mp3" // Different magic sound
+    },
+    {
+        name: "Moonbeam Charm",
+        effect: "Accelerates chart trajectory",
+        color: "#f5d90a",
+        sound: "https://assets.mixkit.co/active_storage/sfx/2754/2754-preview.mp3" // Bell sound
+    },
+    {
+        name: "FUD Repellent",
+        effect: "Dispels negative energy", 
+        color: "#00ff41",
+        sound: "https://assets.mixkit.co/active_storage/sfx/2135/2135-preview.mp3" // Success sound
+    },
+    {
+        name: "Whale Ward",
+        effect: "Prevents large sell orders",
+        color: "#bc13fe",
+        sound: "https://assets.mixkit.co/active_storage/sfx/211/211-preview.mp3" // Magical chime
+    },
+    {
+        name: "Ape Summoning",
+        effect: "Attracts new buyers",
+        color: "#ff5e00",
+        sound: "https://assets.mixkit.co/active_storage/sfx/1063/1063-preview.mp3" // Creature sound
+    }
+];
+
+// ===================== IMPROVED AUDIO HANDLING =====================
+let musicPlaying = false;
+let audioEnabled = false;
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+function enableAudio() {
+    if (audioEnabled) return;
     
-    // ===================== SPELL SYSTEM =====================
-    const spellBook = [
-        {
-            name: "Potion of Pump",
-            effect: "Increases token value by 13.37%",
-            color: "#ff2ced",
-            sound: "https://assets.mixkit.co/sfx/preview/mixkit-magical-fairy-spell-869.mp3"
-        },
-        {
-            name: "Hex of HODL", 
-            effect: "Locks weak hands into diamond status",
-            color: "#0ff0fc",
-            sound: "https://assets.mixkit.co/sfx/preview/mixkit-magic-spell-875.mp3"
-        },
-        {
-            name: "Moonbeam Charm",
-            effect: "Accelerates chart trajectory",
-            color: "#f5d90a",
-            sound: "https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"
-        },
-        {
-            name: "FUD Repellent",
-            effect: "Dispels negative energy", 
-            color: "#00ff41",
-            sound: "https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3"
-        },
-        {
-            name: "Whale Ward",
-            effect: "Prevents large sell orders",
-            color: "#bc13fe",
-            sound: "https://assets.mixkit.co/sfx/preview/mixkit-fantasy-game-incantation-875.mp3"
-        },
-        {
-            name: "Ape Summoning",
-            effect: "Attracts new buyers",
-            color: "#ff5e00",
-            sound: "https://assets.mixkit.co/sfx/preview/mixkit-creature-cry-2208.mp3"
-        }
-    ];
-
-    // ===================== CORE FUNCTIONS =====================
-    let musicPlaying = false;
-    let audioEnabled = false;
-
-    function enableAudio() {
-        if (audioEnabled) return;
+    // iOS requires audio context to be resumed after user interaction
+    if (audioContext.state === 'suspended') {
+        audioContext.resume().then(() => {
+            audioEnabled = true;
+            tryPlayBackgroundMusic();
+        });
+    } else {
         audioEnabled = true;
-        
-        // iOS workaround
-        const silentAudio = new Audio();
-        silentAudio.src = 'data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ...';
-        silentAudio.play().then(() => {
-            silentAudio.remove();
-            bgMusic.play().then(() => {
-                musicPlaying = true;
-                document.getElementById('musicIcon').style.fill = '#000';
-                document.getElementById('audioWarning').style.display = 'none';
-            }).catch(showAudioError);
-        }).catch(showAudioError);
+        tryPlayBackgroundMusic();
     }
+}
 
-    function showAudioError() {
-        console.log("Audio blocked");
-        document.getElementById('musicIcon').style.fill = 'var(--neon-pink)';
-        document.getElementById('audioWarning').style.display = 'block';
-    }
-
-    // ===================== EVENT LISTENERS =====================
-    ['click', 'touchstart', 'keydown'].forEach(event => {
-        document.addEventListener(event, enableAudio, { once: true });
+function tryPlayBackgroundMusic() {
+    if (musicPlaying) return;
+    
+    bgMusic.play().then(() => {
+        musicPlaying = true;
+        document.getElementById('musicIcon').style.fill = '#000';
+        document.getElementById('audioWarning').style.display = 'none';
+    }).catch(e => {
+        console.error("Background music error:", e);
+        showAudioError();
     });
+}
 
-    document.getElementById('musicToggle').addEventListener('click', (e) => {
-        e.stopPropagation();
-        
-        if (musicPlaying) {
-            bgMusic.pause();
-            document.getElementById('musicIcon').style.fill = 'var(--neon-teal)';
-        } else {
-            bgMusic.play()
-                .then(() => {
-                    document.getElementById('musicIcon').style.fill = '#000';
-                    document.getElementById('audioWarning').style.display = 'none';
-                })
-                .catch(showAudioError);
-        }
-        musicPlaying = !musicPlaying;
-    });
-
-    // ===================== SPELL FUNCTIONS =====================
-    function castSpell() {
-        const spell = spellBook[Math.floor(Math.random() * spellBook.length)];
-        const spellAudio = new Audio(spell.sound);
+function playSpellSound(url) {
+    if (!audioEnabled) return;
+    
+    try {
+        const spellAudio = new Audio(url);
         spellAudio.volume = 0.7;
-        spellAudio.play().catch(e => console.log("Spell sound blocked"));
+        spellAudio.play().catch(e => console.log("Spell sound blocked:", e));
         
-        // Update modal
-        const modal = document.getElementById('spellModal');
-        modal.querySelector('h2').textContent = `${spell.name.toUpperCase()} CAST!`;
-        
-        const spellList = modal.querySelector('.spell-list');
-        spellList.innerHTML = `
-            <div class="spell-item" style="color:${spell.color}">
-                <strong>${spell.name}:</strong> ${spell.effect}
-            </div>
-            <div class="mt-4 text-sm" style="color:${spell.color}">
-                Spell intensity: ${Math.floor(Math.random() * 100)}%
-            </div>
-        `;
-        
-        // Visual effects
-        const animation = document.getElementById('spellAnimation');
-        animation.style.display = 'block';
-        
-        for (let i = 0; i < 75; i++) {
-            setTimeout(() => {
-                createParticle(
-                    Math.random() * window.innerWidth,
-                    Math.random() * window.innerHeight,
-                    spell.color
-                );
-            }, i * 15);
-        }
-        
+        // Fallback - if the URL fails, play a default sound
+        spellAudio.addEventListener('error', () => {
+            console.log("Using fallback spell sound");
+            const fallbackSound = new Audio('https://assets.mixkit.co/active_storage/sfx/211/211-preview.mp3');
+            fallbackSound.volume = 0.7;
+            fallbackSound.play();
+        });
+    } catch (e) {
+        console.error("Spell sound error:", e);
+    }
+}
+
+// ===================== UPDATED CAST SPELL FUNCTION =====================
+function castSpell() {
+    const spell = spellBook[Math.floor(Math.random() * spellBook.length)];
+    playSpellSound(spell.sound);
+    
+    // Rest of your spell casting visual effects...
+    const modal = document.getElementById('spellModal');
+    modal.querySelector('h2').textContent = `${spell.name.toUpperCase()} CAST!`;
+    
+    const spellList = modal.querySelector('.spell-list');
+    spellList.innerHTML = `
+        <div class="spell-item" style="color:${spell.color}">
+            <strong>${spell.name}:</strong> ${spell.effect}
+        </div>
+        <div class="mt-4 text-sm" style="color:${spell.color}">
+            Spell intensity: ${Math.floor(Math.random() * 100)}%
+        </div>
+    `;
+    
+    // Visual effects
+    const animation = document.getElementById('spellAnimation');
+    animation.style.display = 'block';
+    
+    for (let i = 0; i < 75; i++) {
         setTimeout(() => {
-            animation.style.display = 'none';
-            modal.style.display = 'block';
-        }, 1200);
+            createParticle(
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerHeight,
+                spell.color
+            );
+        }, i * 15);
     }
-
-    function createParticle(x, y, color) {
-        const particle = document.createElement('div');
-        particle.className = 'spell-particle';
-        particle.style.backgroundColor = color;
-        particle.style.boxShadow = `0 0 10px ${color}`;
-        
-        const size = Math.random() * 12 + 3;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.left = `${x}px`;
-        particle.style.top = `${y}px`;
-        
-        particle.animate([
-            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
-            { 
-                transform: `translate(${Math.random() * 300 - 150}px, ${Math.random() * 300 - 150}px) scale(0)`,
-                opacity: 0
-            }
-        ], {
-            duration: Math.random() * 1500 + 500,
-            easing: 'cubic-bezier(0,0.2,0.8,1)'
-        }).onfinish = () => particle.remove();
-        
-        document.getElementById('spellAnimation').appendChild(particle);
-    }
-
-    function closeSpellModal() {
-        document.getElementById('spellModal').style.display = 'none';
-    }
-
-    // ===================== GLITCH EFFECTS =====================
-    setInterval(() => {
-        const elements = document.querySelectorAll('.glitch, .terminal, .cyber-button');
-        const randomElement = elements[Math.floor(Math.random() * elements.length)];
-        randomElement.classList.add('glitch-active');
-        setTimeout(() => {
-            randomElement.classList.remove('glitch-active');
-        }, 300);
-    }, 5000);
-
-    // Initial audio warning
+    
     setTimeout(() => {
-        if (!musicPlaying) {
-            document.getElementById('audioWarning').style.display = 'block';
-        }
-    }, 3000);
-  </script>
-</body>
-</html>
+        animation.style.display = 'none';
+        modal.style.display = 'block';
+    }, 1200);
+}
+
+// Update your event listeners to use the new enableAudio function
+['click', 'touchstart', 'keydown'].forEach(event => {
+    document.addEventListener(event, enableAudio, { once: true });
+});
