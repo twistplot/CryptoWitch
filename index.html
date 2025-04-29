@@ -12,6 +12,7 @@
       --neon-teal: #0ff0fc;
       --neon-pink: #ff2ced;
       --matrix-green: #00ff41;
+      --cyber-yellow: #f5d90a;
     }
     
     body {
@@ -226,12 +227,57 @@
                   0 0 40px var(--neon-pink);
       margin: 2rem auto;
       animation: float 6s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+    
+    .witch-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--neon-purple),
+                  0 0 60px var(--neon-pink);
     }
     
     @keyframes float {
       0% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
       100% { transform: translateY(0px); }
+    }
+    
+    .cyber-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .cyber-badge {
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--cyber-yellow);
+      padding: 0.5rem 1rem;
+      font-family: 'Orbitron', sans-serif;
+      color: var(--cyber-yellow);
+      text-shadow: 0 0 5px var(--cyber-yellow);
+      box-shadow: 0 0 10px var(--cyber-yellow);
+    }
+    
+    .cyber-link {
+      position: relative;
+      color: var(--neon-teal);
+      text-decoration: none;
+    }
+    
+    .cyber-link:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--neon-teal);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .cyber-link:hover:after {
+      transform: scaleX(1);
     }
   </style>
 </head>
@@ -250,72 +296,87 @@
       <p class="text-2xl md:text-3xl mb-8 matrix-text pulse">>_ CYBERNETIC MEMECOIN SORCERY</p>
       
       <div class="flex flex-wrap justify-center gap-4">
-        <button class="cyber-button" onclick="alert('INITIATING WITCH PROTOCOL...')">ENTER THE WITCHVERSE</button>
-        <button class="cyber-button" style="border-color: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);" onclick="alert('CONNECTING TO PUMP.FUN...')">BUY $WITCH</button>
+        <button class="cyber-button" onclick="window.location.href='https://www.pump.fun'">ENTER THE WITCHVERSE</button>
+        <button class="cyber-button" style="border-color: var(--neon-pink); box-shadow: 0 0 10px var(--neon-pink), inset 0 0 10px var(--neon-pink);" onclick="window.location.href='https://www.pump.fun'">BUY $WITCH</button>
+      </div>
+      
+      <div class="mt-12">
+        <span class="cyber-badge">STEALTH LAUNCHED ON PUMP.FUN</span>
       </div>
     </div>
   </section>
 
   <!-- Witch Image Section -->
-  <section class="py-10 px-6 flex flex-col items-center">
-    <div class="text-center">
+  <section class="py-20 px-6 flex flex-col items-center">
+    <div class="text-center max-w-4xl">
       <h2 class="text-4xl mb-6 cyber-text">THE CRYPTO WITCH</h2>
       <img src="https://i.postimg.cc/Hsgx2TxZ/crypto-witch-promo.png" alt="Crypto Witch" class="witch-image">
-      <p class="text-xl text-gray-300 max-w-2xl mx-auto mt-4">
-        Behold the Crypto Witch - digital sorceress of the blockchain, casting spells on the memecoin markets.
+      <p class="text-xl text-gray-300 mx-auto mt-6">
+        Behold the Crypto Witch - digital sorceress of the blockchain, casting spells on the memecoin markets. 
+        <span class="text-neon-teal">Her magic transforms weak hands into diamond hodlers.</span>
       </p>
     </div>
   </section>
 
   <!-- Tokenomics Terminal -->
   <section class="py-20 px-6 flex flex-col items-center">
-    <div class="cyber-card max-w-2xl w-full">
+    <div class="cyber-card max-w-4xl w-full">
       <h2 class="text-4xl mb-6 cyber-text flex items-center">
         <span class="holographic">📜</span> 
         <span class="ml-3">TOKENOMICS TERMINAL</span>
       </h2>
       
-      <div class="terminal mb-4">
-        <span class="matrix-text">>_ TOTAL_SUPPLY = 1,000,000,000 $WITCH</span>
-      </div>
-      
-      <div class="terminal mb-4">
-        <span class="matrix-text">>_ TAX = 0% (PURE_DEFI_SPELL)</span>
-      </div>
-      
-      <div class="terminal">
-        <span class="matrix-text">>_ LAUNCH_PROTOCOL = STEALTH_DROP.PUMP.FUN</span>
+      <div class="cyber-grid">
+        <div class="terminal">
+          <span class="matrix-text">>_ TOTAL_SUPPLY = 1,000,000,000 $WITCH</span>
+          <p class="text-gray-400 mt-2">Fixed supply with no mint function</p>
+        </div>
+        
+        <div class="terminal">
+          <span class="matrix-text">>_ TAX = 0% (PURE_DEFI_SPELL)</span>
+          <p class="text-gray-400 mt-2">No taxes, pure decentralized magic</p>
+        </div>
+        
+        <div class="terminal">
+          <span class="matrix-text">>_ LP_BURNED = 100%</span>
+          <p class="text-gray-400 mt-2">Liquidity permanently locked</p>
+        </div>
+        
+        <div class="terminal">
+          <span class="matrix-text">>_ LAUNCH = STEALTH_DROP.PUMP.FUN</span>
+          <p class="text-gray-400 mt-2">Fair launch with no presale</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Digital Spellbook -->
   <section class="py-20 px-6 flex flex-col items-center">
-    <div class="cyber-card max-w-2xl w-full">
+    <div class="cyber-card max-w-4xl w-full">
       <h2 class="text-4xl mb-6 cyber-text flex items-center">
         <span class="holographic">🧪</span> 
         <span class="ml-3">DIGITAL SPELLBOOK v2.0</span>
       </h2>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="cyber-grid">
         <div class="terminal">
           <span class="matrix-text">>_ PotionOfPump.exe</span>
-          <p class="text-gray-400 mt-2">Maximize token pump potential</p>
+          <p class="text-gray-400 mt-2">Maximize token pump potential with algorithmic trading spells</p>
         </div>
         
         <div class="terminal">
           <span class="matrix-text">>_ HexOfHODL.bat</span>
-          <p class="text-gray-400 mt-2">Lock in diamond hands</p>
+          <p class="text-gray-400 mt-2">Lock in diamond hands with anti-dump enchantments</p>
         </div>
         
         <div class="terminal">
           <span class="matrix-text">>_ WitchesCurse.dll</span>
-          <p class="text-gray-400 mt-2">Anti-whale protection</p>
+          <p class="text-gray-400 mt-2">Anti-whale protection spells to prevent market manipulation</p>
         </div>
         
         <div class="terminal">
           <span class="matrix-text">>_ SummonWitchers.apk</span>
-          <p class="text-gray-400 mt-2">Community growth spell</p>
+          <p class="text-gray-400 mt-2">Community growth spells to expand the coven</p>
         </div>
       </div>
     </div>
@@ -323,18 +384,18 @@
 
   <!-- Cyber Roadmap -->
   <section class="py-20 px-6 flex flex-col items-center">
-    <div class="cyber-card max-w-2xl w-full">
+    <div class="cyber-card max-w-4xl w-full">
       <h2 class="text-4xl mb-6 cyber-text flex items-center">
         <span class="holographic">🔮</span> 
         <span class="ml-3">CYBER ROADMAP</span>
       </h2>
       
-      <div class="space-y-6">
+      <div class="space-y-8">
         <div class="flex items-start">
           <div class="bg-black border-2 border-purple-500 text-purple-400 px-3 py-1 mr-4 font-mono">PHASE_01</div>
           <div>
             <h3 class="text-xl text-purple-300 mb-1">GATHER_THE_COVEN</h3>
-            <p class="text-gray-400">Initial stealth launch and community formation</p>
+            <p class="text-gray-400">Initial stealth launch and community formation. Establish social channels and first 1000 holders.</p>
           </div>
         </div>
         
@@ -342,7 +403,7 @@
           <div class="bg-black border-2 border-teal-500 text-teal-400 px-3 py-1 mr-4 font-mono">PHASE_02</div>
           <div>
             <h3 class="text-xl text-teal-300 mb-1">CAST_THE_FIRST_SPELL</h3>
-            <p class="text-gray-400">First major marketing push and exchange listings</p>
+            <p class="text-gray-400">First major marketing push with influencers and exchange listings. Implement staking rewards.</p>
           </div>
         </div>
         
@@ -350,7 +411,7 @@
           <div class="bg-black border-2 border-pink-500 text-pink-400 px-3 py-1 mr-4 font-mono">PHASE_03</div>
           <div>
             <h3 class="text-xl text-pink-300 mb-1">WITCHVERSE_EXPANSION</h3>
-            <p class="text-gray-400">NFT collection and metaverse integration</p>
+            <p class="text-gray-400">NFT collection and metaverse integration. Virtual coven gatherings in the Witchverse.</p>
           </div>
         </div>
         
@@ -358,7 +419,7 @@
           <div class="bg-black border-2 border-green-500 text-green-400 px-3 py-1 mr-4 font-mono">PHASE_04</div>
           <div>
             <h3 class="text-xl text-green-300 mb-1">COVEN_WARS.GAME</h3>
-            <p class="text-gray-400">Play-to-earn battle game launch</p>
+            <p class="text-gray-400">Play-to-earn battle game launch where witches compete for crypto prizes.</p>
           </div>
         </div>
       </div>
@@ -366,28 +427,49 @@
   </section>
 
   <!-- Cyber Footer -->
-  <footer class="py-10 px-6 border-t border-gray-800 text-center">
+  <footer class="py-16 px-6 border-t border-gray-800 text-center">
     <div class="max-w-4xl mx-auto">
-      <p class="matrix-text mb-4">>_ JOIN_THE_COVEN:</p>
+      <h3 class="text-3xl cyber-text mb-8">JOIN THE COVEN</h3>
       
-      <div class="flex justify-center space-x-6 mb-8">
-        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
-          <span class="text-xl">TELEGRAM</span>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
-          <span class="text-xl">TWITTER</span>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors">
-          <span class="text-xl">DISCORD</span>
+      <div class="flex justify-center mb-10">
+        <a href="https://twitter.com" class="cyber-link text-2xl mx-8">
+          <span class="holographic">TWITTER</span>
         </a>
       </div>
       
-      <p class="text-gray-600 text-sm">
-        $WITCH IS A MEMECOIN. NOT FINANCIAL ADVICE. THE COVEN DOES NOT GUARANTEE RETURNS.
-        <br>
-        ALL SPELLS CAST AT YOUR OWN RISK.
+      <div class="terminal max-w-2xl mx-auto">
+        <span class="matrix-text">>_ WARNING: $WITCH IS A MEMECOIN. NOT FINANCIAL ADVICE.</span>
+        <p class="text-gray-400 mt-2">The coven does not guarantee returns. All spells cast at your own risk.</p>
+      </div>
+      
+      <p class="text-gray-600 text-sm mt-8">
+        © 2023 CRYPTO WITCH | All spells reserved
       </p>
     </div>
   </footer>
+  
+  <!-- Audio Element -->
+  <audio id="witchAudio" loop>
+    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+  </audio>
+  
+  <script>
+    // Play audio on interaction
+    document.addEventListener('click', function() {
+      const audio = document.getElementById('witchAudio');
+      audio.volume = 0.3;
+      audio.play().catch(e => console.log('Audio play failed:', e));
+    });
+    
+    // Glitch effect on random elements
+    setInterval(() => {
+      const elements = document.querySelectorAll('.glitch, .terminal, .cyber-button');
+      const randomElement = elements[Math.floor(Math.random() * elements.length)];
+      randomElement.classList.add('glitch-active');
+      setTimeout(() => {
+        randomElement.classList.remove('glitch-active');
+      }, 300);
+    }, 5000);
+  </script>
 </body>
 </html>
