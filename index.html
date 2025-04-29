@@ -1,128 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Witch - Spellbinding Gains on the Blockchain</title>
-    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Press Start 2P', cursive;
-            background-color: #2a0038;
-            color: #e8f9fd;
-        }
-        .witch-button {
-            background-color: #39ff14;
-            border: none;
-            padding: 15px 30px;
-            color: black;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .witch-button:hover {
-            background-color: #32cc29;
-        }
-        .cauldron {
-            height: 100px;
-            width: 100px;
-            border-radius: 50%;
-            background-color: #39ff14;
-            box-shadow: 0 0 20px 5px rgba(57, 255, 20, 0.7);
-            animation: bubble 1.5s infinite;
-        }
-        @keyframes bubble {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Crypto Witch</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
+      color: #00ffcc;
+      overflow-x: hidden;
+    }
+
+    .glow-text {
+      text-shadow: 0 0 8px #00ffe7, 0 0 16px #00ffe7, 0 0 32px #00ffe7;
+    }
+
+    .neon-button {
+      background: transparent;
+      border: 2px solid #00ffcc;
+      padding: 12px 30px;
+      font-size: 18px;
+      color: #00ffcc;
+      text-transform: uppercase;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
+    }
+
+    .neon-button:hover {
+      background-color: #00ffe7;
+      color: black;
+      box-shadow: 0 0 20px #00ffe7, 0 0 40px #00ffe7;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 10px rgba(0, 255, 200, 0.2);
+    }
+  </style>
 </head>
 <body>
-    <!-- Landing Page -->
-    <section class="flex flex-col items-center justify-center text-center p-10" style="background-image: url('assets/images/crypto_witch_promo.png'); background-size: cover; background-position: center;">
-        <div class="text-6xl font-bold text-neon-green animate__animated animate__fadeIn">
-            <span class="text-pink-600">CRYPTO</span> WITCH
-        </div>
-        <p class="text-xl mt-2 text-pink-300">Spellbinding Gains on the Blockchain</p>
-        <button class="witch-button mt-4 hover:bg-green-600 transition" onclick="enterWitchverse()">ENTER THE WITCHVERSE</button>
-    </section>
 
-    <!-- Tokenomics -->
-    <section class="text-center p-10">
-        <h2 class="text-4xl font-bold text-neon-green">Tokenomics</h2>
-        <p class="text-lg mt-4">Fixed Supply: 1,000,000,000 Crypto Witch Coins</p>
-        <p class="text-lg mt-4">Taxes: 0% Transaction Fee (for stealth launch!)</p>
-    </section>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col items-center justify-center text-center p-6" style="background-image: url('https://imgur.com/a/u11kviu.png'); background-size: cover; background-position: center;">
+    <h1 class="text-5xl md:text-7xl font-bold glow-text mb-4">CRYPTO WITCH</h1>
+    <p class="text-xl md:text-2xl text-teal-200 mb-6">Casting stealth spells on Pump.fun</p>
+    <button class="neon-button" onclick="alert('Entering the Witchverse!')">Enter the Witchverse</button>
+  </section>
 
-    <!-- Spellbook -->
-    <section class="text-center p-10">
-        <h2 class="text-4xl font-bold text-neon-green">The Spellbook</h2>
-        <ul class="mt-4 text-lg">
-            <li>PotionOfPump()</li>
-            <li>HexOfHODL()</li>
-            <li>Witch's Curse()</li>
-            <li>SummonWitchers()</li>
-        </ul>
-    </section>
+  <!-- Tokenomics -->
+  <section class="p-10 flex flex-col items-center">
+    <div class="glass-card max-w-xl text-center">
+      <h2 class="text-3xl mb-4 glow-text">📜 Tokenomics</h2>
+      <p>Fixed Supply: <strong>1,000,000,000</strong></p>
+      <p>Tax: <strong>0%</strong></p>
+      <p>Launch: <strong>Stealth drop on pump.fun</strong></p>
+    </div>
+  </section>
 
-    <!-- Witch Map (Roadmap) -->
-    <section class="text-center p-10">
-        <h2 class="text-4xl font-bold text-neon-green">The Witch Map</h2>
-        <ul class="mt-4 text-lg">
-            <li>Phase 1: The Gathering of the Coven</li>
-            <li>Phase 2: First Spellcast - Launch on Pump.fun</li>
-            <li>Phase 3: Advanced Potion Brewing - Staking & Governance</li>
-            <li>Phase 4: Witch Coven Wars - Community Contests & Rewards</li>
-        </ul>
-    </section>
+  <!-- Spellbook -->
+  <section class="p-10 flex flex-col items-center">
+    <div class="glass-card max-w-xl text-center">
+      <h2 class="text-3xl mb-4 glow-text">🧪 The Spellbook</h2>
+      <ul>
+        <li>PotionOfPump()</li>
+        <li>HexOfHODL()</li>
+        <li>Witch's Curse()</li>
+        <li>SummonWitchers()</li>
+      </ul>
+    </div>
+  </section>
 
-    <!-- Mint Countdown (Hidden until stealth launch time) -->
-    <section class="text-center p-10">
-        <h2 class="text-4xl font-bold text-neon-green">Mint Countdown</h2>
-        <div id="countdown" class="text-2xl mt-4">Launching Soon...</div>
-    </section>
+  <!-- Roadmap -->
+  <section class="p-10 flex flex-col items-center">
+    <div class="glass-card max-w-xl text-center">
+      <h2 class="text-3xl mb-4 glow-text">🔮 The Witch Map</h2>
+      <ul>
+        <li>Phase 1: Gather the Coven</li>
+        <li>Phase 2: Cast the First Spell</li>
+        <li>Phase 3: Witchverse Expansion</li>
+        <li>Phase 4: Launch Coven Wars</li>
+      </ul>
+    </div>
+  </section>
 
-    <!-- Cauldron Animation -->
-    <section class="flex justify-center p-10">
-        <div class="cauldron"></div>
-    </section>
-
-    <script>
-        // Countdown Timer (stealth launch)
-        let launchDate = new Date().getTime() + 5000; // 5 seconds from now (for example purposes)
-        
-        function updateCountdown() {
-            let now = new Date().getTime();
-            let distance = launchDate - now;
-            if (distance <= 0) {
-                document.getElementById("countdown").innerHTML = "Launch NOW!";
-            } else {
-                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-            }
-        }
-        
-        setInterval(updateCountdown, 1000);
-        
-        function enterWitchverse() {
-            // Action to reveal more info, show connect wallet, etc.
-            alert("Entering the Witchverse!");
-        }
-
-        // Add animations for cauldron (bubbling effect)
-        anime({
-            targets: '.cauldron',
-            scale: [1, 1.2],
-            loop: true,
-            direction: 'alternate',
-            easing: 'easeInOutSine',
-            duration: 1000,
-        });
-    </script>
 </body>
 </html>
