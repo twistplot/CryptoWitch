@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>CRYPTO WITCH | Cybernetic Memecoin Sorcery</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Oxanium:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -24,6 +24,7 @@
         radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.1) 0%, transparent 20%),
         radial-gradient(circle at 90% 80%, rgba(15, 240, 252, 0.1) 0%, transparent 20%),
         linear-gradient(to bottom, rgba(10, 10, 10, 1), rgba(5, 5, 15, 1));
+      -webkit-tap-highlight-color: transparent;
     }
 
     h1, h2, h3, h4 {
@@ -41,8 +42,8 @@
     .cyber-button {
       background: transparent;
       border: 2px solid var(--neon-teal);
-      padding: 12px 30px;
-      font-size: 18px;
+      padding: 0.8rem 1.5rem;
+      font-size: clamp(14px, 4vw, 18px);
       color: var(--neon-teal);
       text-transform: uppercase;
       transition: all 0.3s ease;
@@ -51,9 +52,17 @@
       position: relative;
       overflow: hidden;
       font-family: 'Orbitron', sans-serif;
+      min-width: 120px;
     }
 
-    .cyber-button:hover {
+    @media (min-width: 768px) {
+      .cyber-button {
+        padding: 12px 30px;
+        font-size: 18px;
+      }
+    }
+
+    .cyber-button:hover, .cyber-button:active {
       background-color: var(--neon-teal);
       color: #000;
       box-shadow: 0 0 20px var(--neon-teal), 
@@ -72,7 +81,7 @@
       transition: 0.5s;
     }
 
-    .cyber-button:hover:before {
+    .cyber-button:hover:before, .cyber-button:active:before {
       left: 100%;
     }
 
@@ -80,7 +89,7 @@
       background: rgba(10, 10, 20, 0.7);
       border: 1px solid var(--neon-purple);
       border-radius: 0;
-      padding: 30px;
+      padding: 1.5rem;
       backdrop-filter: blur(5px);
       box-shadow: 0 0 15px var(--neon-purple),
                   inset 0 0 10px var(--neon-purple);
@@ -92,6 +101,16 @@
         calc(100% - 15px) 100%, 
         0 100%
       );
+      margin: 0 auto;
+      width: 95%;
+    }
+
+    @media (min-width: 768px) {
+      .cyber-card {
+        padding: 30px;
+        width: 100%;
+        max-width: 1200px;
+      }
     }
 
     .cyber-card:after {
@@ -110,6 +129,7 @@
       color: var(--matrix-green);
       font-family: monospace;
       text-shadow: 0 0 5px var(--matrix-green);
+      font-size: clamp(16px, 4vw, 24px);
     }
 
     .scanline {
@@ -147,8 +167,9 @@
       background: rgba(0, 0, 0, 0.8);
       border: 1px solid var(--matrix-green);
       font-family: monospace;
-      padding: 20px;
+      padding: 1rem;
       position: relative;
+      font-size: clamp(12px, 3vw, 16px);
     }
 
     .terminal:before {
@@ -158,6 +179,7 @@
 
     .glitch {
       position: relative;
+      cursor: pointer;
     }
 
     .glitch:before, .glitch:after {
@@ -221,16 +243,25 @@
     }
     
     .witch-image {
-      max-width: 300px;
+      max-width: 80%;
+      width: 280px;
+      height: auto;
       border: 3px solid var(--neon-purple);
       box-shadow: 0 0 20px var(--neon-purple),
                   0 0 40px var(--neon-pink);
-      margin: 2rem auto;
+      margin: 1rem auto;
       animation: float 6s ease-in-out infinite;
       transition: all 0.3s ease;
     }
     
-    .witch-image:hover {
+    @media (min-width: 768px) {
+      .witch-image {
+        max-width: 300px;
+        margin: 2rem auto;
+      }
+    }
+    
+    .witch-image:hover, .witch-image:active {
       transform: scale(1.05);
       box-shadow: 0 0 30px var(--neon-purple),
                   0 0 60px var(--neon-pink);
@@ -244,8 +275,16 @@
     
     .cyber-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .cyber-grid {
+        gap: 2rem;
+        padding: 0;
+      }
     }
     
     .cyber-badge {
@@ -256,12 +295,14 @@
       color: var(--cyber-yellow);
       text-shadow: 0 0 5px var(--cyber-yellow);
       box-shadow: 0 0 10px var(--cyber-yellow);
+      font-size: clamp(12px, 3vw, 16px);
     }
     
     .cyber-link {
       position: relative;
       color: var(--neon-teal);
       text-decoration: none;
+      font-size: clamp(16px, 4vw, 24px);
     }
     
     .cyber-link:after {
@@ -276,7 +317,7 @@
       transition: transform 0.3s ease;
     }
     
-    .cyber-link:hover:after {
+    .cyber-link:hover:after, .cyber-link:focus:after {
       transform: scaleX(1);
     }
     
@@ -290,18 +331,26 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.8);
+      touch-action: manipulation;
     }
     
     .modal-content {
       background: rgba(10, 10, 20, 0.95);
       border: 2px solid var(--neon-purple);
-      margin: 15% auto;
-      padding: 30px;
-      width: 80%;
+      margin: 10% auto;
+      padding: 1.5rem;
+      width: 95%;
       max-width: 500px;
       text-align: center;
       box-shadow: 0 0 30px var(--neon-purple);
       position: relative;
+    }
+    
+    @media (min-width: 768px) {
+      .modal-content {
+        margin: 15% auto;
+        padding: 30px;
+      }
     }
     
     .close-modal {
@@ -314,7 +363,7 @@
       cursor: pointer;
     }
     
-    .close-modal:hover {
+    .close-modal:hover, .close-modal:focus {
       color: var(--neon-teal);
     }
     
@@ -340,6 +389,7 @@
     .spell-list {
       text-align: left;
       margin: 20px 0;
+      font-size: clamp(14px, 3vw, 18px);
     }
     
     .spell-item {
@@ -367,9 +417,14 @@
       cursor: pointer;
       box-shadow: 0 0 10px var(--neon-teal);
       transition: all 0.3s ease;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
-    .music-controls:hover {
+    .music-controls:hover, .music-controls:active {
       background: var(--neon-teal);
       color: #000;
       transform: scale(1.1);
@@ -388,17 +443,40 @@
       z-index: 1001;
       font-family: 'Orbitron';
       box-shadow: 0 0 15px var(--neon-pink);
+      font-size: 14px;
+      max-width: 200px;
+    }
+    
+    /* Mobile menu button (hidden by default) */
+    .mobile-menu-button {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(10, 10, 20, 0.7);
+      border: 1px solid var(--neon-purple);
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--neon-purple);
+    }
+    
+    @media (max-width: 640px) {
+      .mobile-menu-button {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Audio Warning -->
   <div id="audioWarning">
-    🔊 Audio blocked - click anywhere to enable sounds
+    🔊 Audio blocked - tap anywhere to enable sounds
   </div>
 
   <!-- Music Controls -->
-  <div class="music-controls" id="musicToggle" title="Toggle Music">
+  <div class="music-controls" id="musicToggle" title="Toggle Music" aria-label="Toggle music">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--neon-teal)" id="musicIcon">
       <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
     </svg>
@@ -412,8 +490,8 @@
   <!-- Spell Modal -->
   <div id="spellModal" class="modal">
     <div class="modal-content cyber-card">
-      <span class="close-modal" onclick="closeSpellModal()">&times;</span>
-      <h2 class="text-3xl mb-4 cyber-text">WITCH'S SPELLBOOK</h2>
+      <span class="close-modal" onclick="closeSpellModal()" aria-label="Close spell modal">&times;</span>
+      <h2 class="text-2xl sm:text-3xl mb-4 cyber-text">WITCH'S SPELLBOOK</h2>
       <div class="spell-list">
         <!-- Dynamic content will be inserted here -->
       </div>
@@ -424,33 +502,33 @@
   </div>
 
   <!-- Cybernetic Hero Section -->
-  <section class="min-h-screen flex flex-col items-center justify-center text-center p-6 relative overflow-hidden hero-image">
+  <section class="min-h-screen flex flex-col items-center justify-center text-center p-4 sm:p-6 relative overflow-hidden hero-image">
     <div class="absolute inset-0 hero-overlay"></div>
     
-    <div class="relative z-10">
-      <div class="glitch mb-6" data-text="CRYPTO WITCH">
-        <h1 class="text-6xl md:text-8xl font-bold cyber-text">CRYPTO WITCH</h1>
+    <div class="relative z-10 w-full px-4">
+      <div class="glitch mb-4 sm:mb-6" data-text="CRYPTO WITCH" onclick="this.classList.add('glitch-active'); setTimeout(() => this.classList.remove('glitch-active'), 300);">
+        <h1 class="text-4xl sm:text-6xl md:text-8xl font-bold cyber-text">CRYPTO WITCH</h1>
       </div>
       
-      <p class="text-2xl md:text-3xl mb-8 matrix-text pulse">>_ CYBERNETIC MEMECOIN SORCERY</p>
+      <p class="text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8 matrix-text pulse">>_ CYBERNETIC MEMECOIN SORCERY</p>
       
-      <div class="flex flex-wrap justify-center gap-4">
+      <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
         <button class="cyber-button" onclick="window.open('https://www.pump.fun', '_blank')">BUY ON PUMP.FUN</button>
         <button class="cyber-button" style="border-color: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple), inset 0 0 10px var(--neon-purple);" onclick="castSpell()">GET SPELLS</button>
       </div>
       
-      <div class="mt-12">
+      <div class="mt-8 sm:mt-12">
         <span class="cyber-badge">STEALTH LAUNCHED ON PUMP.FUN</span>
       </div>
     </div>
   </section>
 
   <!-- Witch Image Section -->
-  <section class="py-20 px-6 flex flex-col items-center">
-    <div class="text-center max-w-4xl">
-      <h2 class="text-4xl mb-6 cyber-text">THE CRYPTO WITCH</h2>
+  <section class="py-12 sm:py-20 px-4 sm:px-6 flex flex-col items-center">
+    <div class="text-center w-full max-w-4xl">
+      <h2 class="text-3xl sm:text-4xl mb-4 sm:mb-6 cyber-text">THE CRYPTO WITCH</h2>
       <img src="https://i.postimg.cc/Hsgx2TxZ/crypto-witch-promo.png" alt="Crypto Witch" class="witch-image">
-      <p class="text-xl text-gray-300 mx-auto mt-6">
+      <p class="text-lg sm:text-xl text-gray-300 mx-auto mt-4 sm:mt-6 px-2">
         Behold the Crypto Witch - digital sorceress of the blockchain, casting spells on the memecoin markets. 
         <span style="color: var(--neon-teal);">Her magic transforms weak hands into diamond hodlers.</span>
       </p>
@@ -458,9 +536,9 @@
   </section>
 
   <!-- Tokenomics Terminal -->
-  <section class="py-20 px-6 flex flex-col items-center">
-    <div class="cyber-card max-w-4xl w-full">
-      <h2 class="text-4xl mb-6 cyber-text flex items-center">
+  <section class="py-12 sm:py-20 px-4 sm:px-6 flex flex-col items-center">
+    <div class="cyber-card w-full">
+      <h2 class="text-3xl sm:text-4xl mb-4 sm:mb-6 cyber-text flex items-center justify-center">
         <span class="holographic">📜</span> 
         <span class="ml-3">TOKENOMICS TERMINAL</span>
       </h2>
@@ -490,9 +568,9 @@
   </section>
 
   <!-- Digital Spellbook -->
-  <section class="py-20 px-6 flex flex-col items-center">
-    <div class="cyber-card max-w-4xl w-full">
-      <h2 class="text-4xl mb-6 cyber-text flex items-center">
+  <section class="py-12 sm:py-20 px-4 sm:px-6 flex flex-col items-center">
+    <div class="cyber-card w-full">
+      <h2 class="text-3xl sm:text-4xl mb-4 sm:mb-6 cyber-text flex items-center justify-center">
         <span class="holographic">🧪</span> 
         <span class="ml-3">DIGITAL SPELLBOOK v2.0</span>
       </h2>
@@ -522,43 +600,43 @@
   </section>
 
   <!-- Cyber Roadmap -->
-  <section class="py-20 px-6 flex flex-col items-center">
-    <div class="cyber-card max-w-4xl w-full">
-      <h2 class="text-4xl mb-6 cyber-text flex items-center">
+  <section class="py-12 sm:py-20 px-4 sm:px-6 flex flex-col items-center">
+    <div class="cyber-card w-full">
+      <h2 class="text-3xl sm:text-4xl mb-4 sm:mb-6 cyber-text flex items-center justify-center">
         <span class="holographic">🔮</span> 
         <span class="ml-3">CYBER ROADMAP</span>
       </h2>
       
-      <div class="space-y-8">
+      <div class="space-y-6 sm:space-y-8">
         <div class="flex items-start">
-          <div class="bg-black border-2 border-purple-500 text-purple-400 px-3 py-1 mr-4 font-mono">PHASE_01</div>
+          <div class="bg-black border-2 border-purple-500 text-purple-400 px-3 py-1 mr-4 font-mono text-sm sm:text-base">PHASE_01</div>
           <div>
-            <h3 class="text-xl text-purple-300 mb-1">GATHER_THE_COVEN</h3>
-            <p class="text-gray-400">Initial stealth launch and community formation. Establish social channels and first 1000 holders.</p>
+            <h3 class="text-lg sm:text-xl text-purple-300 mb-1">GATHER_THE_COVEN</h3>
+            <p class="text-gray-400 text-sm sm:text-base">Initial stealth launch and community formation. Establish social channels and first 1000 holders.</p>
           </div>
         </div>
         
         <div class="flex items-start">
-          <div class="bg-black border-2 border-teal-500 text-teal-400 px-3 py-1 mr-4 font-mono">PHASE_02</div>
+          <div class="bg-black border-2 border-teal-500 text-teal-400 px-3 py-1 mr-4 font-mono text-sm sm:text-base">PHASE_02</div>
           <div>
-            <h3 class="text-xl text-teal-300 mb-1">CAST_THE_FIRST_SPELL</h3>
-            <p class="text-gray-400">First major marketing push with influencers and exchange listings. Implement staking rewards.</p>
+            <h3 class="text-lg sm:text-xl text-teal-300 mb-1">CAST_THE_FIRST_SPELL</h3>
+            <p class="text-gray-400 text-sm sm:text-base">First major marketing push with influencers and exchange listings. Implement staking rewards.</p>
           </div>
         </div>
         
         <div class="flex items-start">
-          <div class="bg-black border-2 border-pink-500 text-pink-400 px-3 py-1 mr-4 font-mono">PHASE_03</div>
+          <div class="bg-black border-2 border-pink-500 text-pink-400 px-3 py-1 mr-4 font-mono text-sm sm:text-base">PHASE_03</div>
           <div>
-            <h3 class="text-xl text-pink-300 mb-1">WITCHVERSE_EXPANSION</h3>
-            <p class="text-gray-400">NFT collection and metaverse integration. Virtual coven gatherings in the Witchverse.</p>
+            <h3 class="text-lg sm:text-xl text-pink-300 mb-1">WITCHVERSE_EXPANSION</h3>
+            <p class="text-gray-400 text-sm sm:text-base">NFT collection and metaverse integration. Virtual coven gatherings in the Witchverse.</p>
           </div>
         </div>
         
         <div class="flex items-start">
-          <div class="bg-black border-2 border-green-500 text-green-400 px-3 py-1 mr-4 font-mono">PHASE_04</div>
+          <div class="bg-black border-2 border-green-500 text-green-400 px-3 py-1 mr-4 font-mono text-sm sm:text-base">PHASE_04</div>
           <div>
-            <h3 class="text-xl text-green-300 mb-1">COVEN_WARS.GAME</h3>
-            <p class="text-gray-400">Play-to-earn battle game launch where witches compete for crypto prizes.</p>
+            <h3 class="text-lg sm:text-xl text-green-300 mb-1">COVEN_WARS.GAME</h3>
+            <p class="text-gray-400 text-sm sm:text-base">Play-to-earn battle game launch where witches compete for crypto prizes.</p>
           </div>
         </div>
       </div>
@@ -566,23 +644,23 @@
   </section>
 
   <!-- Cyber Footer -->
-  <footer class="py-16 px-6 border-t border-gray-800 text-center">
+  <footer class="py-12 sm:py-16 px-4 sm:px-6 border-t border-gray-800 text-center">
     <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl cyber-text mb-8">JOIN THE COVEN</h3>
+      <h3 class="text-2xl sm:text-3xl cyber-text mb-6 sm:mb-8">JOIN THE COVEN</h3>
       
-      <div class="flex justify-center mb-10">
-        <a href="https://x.com/Cryptowitch21" target="_blank" class="cyber-link text-2xl mx-8">
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-8 sm:mb-10">
+        <a href="https://x.com/Cryptowitch21" target="_blank" class="cyber-link text-xl sm:text-2xl mx-4 sm:mx-8">
           <span class="holographic">TWITTER/X</span>
         </a>
       </div>
       
       <div class="terminal max-w-2xl mx-auto">
         <span class="matrix-text">>_ WARNING: $WITCH IS A MEMECOIN. NOT FINANCIAL ADVICE.</span>
-        <p class="text-gray-400 mt-2">The coven does not guarantee returns. All spells cast at your own risk.</p>
+        <p class="text-gray-400 mt-2 text-sm sm:text-base">The coven does not guarantee returns. All spells cast at your own risk.</p>
       </div>
       
-      <p class="text-gray-600 text-sm mt-8">
-        © 2025 CRYPTO WITCH | All spells reserved
+      <p class="text-gray-600 text-xs sm:text-sm mt-6 sm:mt-8">
+        © 2023 CRYPTO WITCH | All spells reserved
       </p>
     </div>
   </footer>
@@ -712,6 +790,14 @@
                 .catch(showAudioError);
         }
         musicPlaying = !musicPlaying;
+    });
+
+    // Make glitch effect work on touch devices
+    document.querySelectorAll('.glitch').forEach(glitch => {
+        glitch.addEventListener('click', function() {
+            this.classList.add('glitch-active');
+            setTimeout(() => this.classList.remove('glitch-active'), 300);
+        });
     });
 
     // ===================== SPELL FUNCTIONS =====================
